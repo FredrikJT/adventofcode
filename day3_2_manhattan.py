@@ -122,6 +122,8 @@ xnew = 5000
 ynew = 5000
 steps = 0
 np_arr2 = np.array([[0, 5000, 5000]])
+
+matches = np.array([[0,0,0]]);
     
 for i in range(len(input2[0])):
     direction = input2[0][i][0]
@@ -134,6 +136,7 @@ for i in range(len(input2[0])):
         for i in range(length):
             np_arr2 = np.append(np_arr2, np.array([[steps+i, x+i, y]]), axis=0)
             if board[x+i, y] == 1:
+                matches = np.append(matches, np.array([[steps+i, x+i, y]]), axis=0)
                 print(steps)
         
         steps = steps+length
@@ -147,6 +150,7 @@ for i in range(len(input2[0])):
         for i in range(length):
             np_arr2 = np.append(np_arr2, np.array([[steps+i, x-i, y]]), axis=0)
             if board[x-i, y] == 1:
+                matches = np.append(matches, np.array([[steps+i, x-i, y]]), axis=0)
                 print(steps)
         
         steps = steps+length
@@ -160,6 +164,7 @@ for i in range(len(input2[0])):
         for i in range(length):
             np_arr2 = np.append(np_arr2, np.array([[steps+i, x, y-i]]), axis=0)
             if board[x, y-i] == 1:
+                matches = np.append(matches, np.array([[steps+i, x, y-i]]), axis=0)
                 print(steps)
         
         steps = steps+length
@@ -173,6 +178,7 @@ for i in range(len(input2[0])):
         for i in range(length):
             np_arr2 = np.append(np_arr2, np.array([[steps+i, x, y+i]]), axis=0)
             if board[x, y+i] == 1:
+                matches = np.append(matches, np.array([[steps+i, x, y+i]]), axis=0)
                 print(steps)
         
         steps = steps+length
@@ -181,6 +187,28 @@ for i in range(len(input2[0])):
         
     x = xnew
     y = ynew
+    
+    
+# Compare matches and np_arr1 to find the steps taken at the matching positions
+    
+x_match_row = np.array([],dtype=int)
+
+for i in range(len(matches)):
+    
+    x_match_row = np.append(x_match_row, np.where(np_arr1[:,1] == matches[i,1])[0])
+    
+    
+x_matches = np.array([],dtype=int)
+for i in range(len(x_match_row)):
+    x_matches = np.append(x_matches, np_arr1[x_match_row[i]])
+    
+x_y_matches = np.array([],dtype=int)
+for i in range(len(matches)):
+    x_y_matches = np.append(x_y_matches, np.where(x_matches[:,2] == matches[i,2])[0])
+    
+
+    
+    
     
     
 plt.plot(np_arr1[:,1], np_arr1[:,2], 'r')
