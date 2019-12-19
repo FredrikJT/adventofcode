@@ -6,6 +6,7 @@ const stringLength = 6;
 var counter = 0;
 
 for (let inputNumber = 356261; inputNumber <= 846303; inputNumber++) {
+// for (let inputNumber = 123789; inputNumber <= 123789; inputNumber++) {
     let inputString = convertIntToString(inputNumber);
 
     if (checkNumberNeverDecrease(inputString)) {
@@ -60,34 +61,83 @@ function adjacentDigitsAreTheSame(inputString) {
 }
 
 
+
+
+// console.log(checkSameDigitsAreInPairs("112233"));
+
 // Only same digits in pairs are allowed.
 function checkSameDigitsAreInPairs(inputString) {
     
-    let previous = 0;
+    let previous = -1;
     let nrOfDigitsEqual = 0;
+    let maxNrOfDigitsEqual = 0;
     let reset = true;
+
     for (let index = 0; index < inputString.length; index++) {
         let current = inputString[index];
 
         if (current === previous) {
-            reset = false;
             nrOfDigitsEqual++;
-        } else if (nrOfDigitsEqual > 0 && nrOfDigitsEqual % 2 == 0) {
-            return false;
-        } else if (reset) {
+            maxNrOfDigitsEqual = nrOfDigitsEqual;
+        } else {
+            if(nrOfDigitsEqual === 1) {
+                return true;
+            }
+            maxNrOfDigitsEqual = nrOfDigitsEqual;
             nrOfDigitsEqual = 0;
         }
 
-        if (inputString.length-1 == index && nrOfDigitsEqual % 2 == 0) {
-            return false;
+        if ((inputString.length-1 === index) && (maxNrOfDigitsEqual === 1)) {
+            return true;
+        } 
+
+        if (nrOfDigitsEqual > maxNrOfDigitsEqual) {
+            maxNrOfDigitsEqual = nrOfDigitsEqual;
         }
 
-        reset = true;
         previous = current;
+        maxNrOfDigitsEqual = 0;
     }
 
-    return true;
+    return false;
 }
 
+// // Only same digits in pairs are allowed.
+// function checkSameDigitsAreInPairs(inputString) {
+    
+//     let previous = -1;
+//     let nrOfDigitsEqual = 0;
+//     let reset = true;
 
-// console.log(checkSameDigitsAreInPairs("111122"));
+//     for (let index = 0; index < inputString.length; index++) {
+//         let current = inputString[index];
+
+//         if (current === previous) {
+//             reset = false;
+//             nrOfDigitsEqual++;
+//         } else {
+//             reset = true;
+//         }
+
+//         if ((reset && ((nrOfDigitsEqual > 0) && (nrOfDigitsEqual % 2 === 0))) || (nrOfDigitsEqual > 3)) {
+//             return false;
+//         }
+        
+//         if (reset) {
+//             nrOfDigitsEqual = 0;
+//             reset = false;
+//         }
+
+//         if ((index === (inputString.length-1)) && (nrOfDigitsEqual % 2 === 0)) {
+//             return false;
+//         }
+
+        
+//         previous = current;
+//     }
+
+//     return true;
+// }
+
+
+
