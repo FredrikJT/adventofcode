@@ -11,7 +11,7 @@ for (let inputNumber = 356261; inputNumber <= 846303; inputNumber++) {
 
     if (checkNumberNeverDecrease(inputString)) {
         if (adjacentDigitsAreTheSame(inputString)) {
-            if (checkSameDigitsAreInPairs(inputString)) {
+            if (doubleDigitsAreNotPartOfBiggerGroup(inputString)) {
                 counter++;
             }
         }
@@ -140,4 +140,39 @@ function checkSameDigitsAreInPairs(inputString) {
 // }
 
 
+// console.log(true === doubleDigitsAreNotPartOfBiggerGroup("112345"));
+// console.log(true === doubleDigitsAreNotPartOfBiggerGroup("122345"));
+// console.log(true === doubleDigitsAreNotPartOfBiggerGroup("012234"));
+// console.log(true === doubleDigitsAreNotPartOfBiggerGroup("123445"));
+// console.log(true === doubleDigitsAreNotPartOfBiggerGroup("123455"));
+
+function doubleDigitsAreNotPartOfBiggerGroup(inputString) {
+
+    // Beginning of string
+    if (inputString[0] === inputString[1] && inputString[1] !== inputString[2]) {
+        return true;
+    }
+
+    // 1223xx
+    if (inputString[0] !== inputString[1] && inputString[1] === inputString[2] && inputString[2] !== inputString[3]) {
+        return true;
+    }
+
+    // x1223x
+    if (inputString[1] !== inputString[2] && inputString[2] === inputString[3] && inputString[3] !== inputString[4]) {
+        return true;
+    }
+
+    // xx1223
+    if (inputString[2] !== inputString[3] && inputString[3] === inputString[4] && inputString[4] !== inputString[5]) {
+        return true;
+    }
+
+    // xxx122
+    if (inputString[3] !== inputString[4] && inputString[4] === inputString[5] && inputString[5] !== inputString[6]) {
+        return true;
+    }
+
+    return false;
+}
 

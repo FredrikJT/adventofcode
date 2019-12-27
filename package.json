@@ -1,0 +1,11 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "scripts": {},
+  "private": true,
+  "dependencies": {
+    "jasmine": "^3.5.0",
+    "prompt": "^1.0.0"
+  },
+  "devDependencies": {}
+}
