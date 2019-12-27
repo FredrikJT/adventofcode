@@ -1,15 +1,6 @@
 /*jshint esversion: 6 */
-// var rl = require('readline');
-
-// var i = rl.createInterface(process.sdtin, process.stdout, null);
-
-// var prompt = require('prompt');
 
 class Intcode {
-    constructor(
-        ) {
-    }
-
     getValueOfAddressAtPosition(pos, index, intArray) {
         
         if (pos === undefined) {
@@ -22,7 +13,6 @@ class Intcode {
             throw new Error('intString is undefined');
         }
 
-        // let result = intArray[index+pos];
         let result = intArray[pos];
         if (result === undefined) {
             console.log('index: ' + index);
@@ -33,29 +23,14 @@ class Intcode {
     }
     
     inputValue(intArray, modes, index) {
-        var numberToSave = 1;
-        // prompt.start();
-        // var numberToSave = prompt.get();
-        // i.question("input value...", function(answer) {
-        //     numberToSave = answer;
-          
-        //     // These two lines together allow the program to terminate. Without
-        //     // them, it would run forever.
-        //     i.close();
-        //     process.stdin.destroy();
-        //   });
-        // var numberToSave = window.prompt("input value...");
-        // numberToSave = this.applyModeAndReturnResult(numberToSave, modes[0], index);
-        // let addressToSaveAt = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
+        var numberToSave = 5; //get the ID of the system to test
         let addressToSaveAt = this.applyModeAndReturnResult(index+1, modes[0], index, intArray);
         console.log('Saving input value ' + numberToSave + ' at position ' + addressToSaveAt);
-        // intArray[addressToSaveAt] = numberToSave;
         intArray.splice(addressToSaveAt, 1, numberToSave);
         return intArray;
     }
 
     outputValue(intArray, modes, index) {
-        // TODO: index+1 instead of intArray[index+1]?
         let outputValue = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
         console.log('Output value: ' + outputValue);
     }
@@ -63,7 +38,6 @@ class Intcode {
     addNumbers(intArray, modes, index) {
         let number1 = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
         let number2 = this.applyModeAndReturnResult(intArray[index+2], modes[1], index, intArray);
-        // let addressToSaveAt = this.applyModeAndReturnResult(intArray[index+3], modes[2], index, intArray);
         let addressToSaveAt = this.applyModeAndReturnResult(index+3, modes[2], index, intArray);
 
         intArray.splice(addressToSaveAt, 1, number1+number2);
@@ -74,19 +48,13 @@ class Intcode {
         let number1 = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
         let number2 = this.applyModeAndReturnResult(intArray[index+2], modes[1], index, intArray);
         this.checkNotWritingWithImmediateMode(modes[2]);
-        // let addressToSaveAt = this.applyModeAndReturnResult(intArray[index+3], modes[2], index, intArray);
         let addressToSaveAt = this.applyModeAndReturnResult(index+3, modes[2], index, intArray);
         intArray.splice(addressToSaveAt, 1, number1*number2);
         return intArray;
     }
     
-    
     convertIntToString(inputNumber) {
         return String(inputNumber);
-    }
-    
-    getValueAtAdress(address, intArray) {
-        return intArray[address];
     }
 
     getOpcode(inputArray) {
@@ -103,7 +71,6 @@ class Intcode {
             let element = modesString[index];
             element = parseInt(element);
             modes.unshift(element); // Reverse order of modes
-            // modes.push(element);
         }
     
         return modes;
@@ -135,4 +102,3 @@ class Intcode {
 }
 
 module.exports = Intcode;
-
