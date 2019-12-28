@@ -99,6 +99,58 @@ class Intcode {
             throw new Error('Using something else than position mode when saving to an adress! Mode: ' + mode);
         }
     }
-}
+
+    jumpIfTrue(intArray, modes, index) {
+        let parameter1 = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
+        if (parameter1 != 0) {
+            let newIndex = this.applyModeAndReturnResult(intArray[index+2], modes[1], index, intArray);
+            console.log('Changing instruction pointer from ' + index + ' to ' + newIndex);
+            index = newIndex;
+        } else {
+            index = index + 3;
+        }
+        return index;
+    }
+    
+    jumpIfFalse(intArray, modes, index) {
+        let parameter1 = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
+        if (parameter1 === 0) {
+            let newIndex = this.applyModeAndReturnResult(intArray[index+2], modes[1], index, intArray);
+            console.log('Changing instruction pointer from ' + index + ' to ' + newIndex);
+            index = newIndex;
+        } else {
+            index = index + 3;
+        }
+        return index;
+    }
+
+    lessThan(intArray, modes, index) {
+        let parameter1 = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
+        let parameter2 = this.applyModeAndReturnResult(intArray[index+2], modes[1], index, intArray);
+        let addressToSaveAt = this.applyModeAndReturnResult(index+3, modes[2], index, intArray);
+        if (parameter1 < parameter2) {
+            console.log(parameter1 + ' is less than ' + parameter2 + '. Saving 1 to address ' + addressToSaveAt);
+            intArray.splice(addressToSaveAt, 1, 1);
+        } else {
+            console.log(parameter1 + ' is not less than ' + parameter2 + '. Saving 1 to address ' + addressToSaveAt);
+            intArray.splice(addressToSaveAt, 1, 0);
+        }
+        return intArray;
+    }
+    
+    equal(intArray, modes, index) {
+        let parameter1 = this.applyModeAndReturnResult(intArray[index+1], modes[0], index, intArray);
+        let parameter2 = this.applyModeAndReturnResult(intArray[index+2], modes[1], index, intArray);
+        let addressToSaveAt = this.applyModeAndReturnResult(index+3, modes[2], index, intArray);
+        if (parameter1 === parameter2) {
+            console.log(parameter1 + ' is equal to ' + parameter2 + '. Saving 1 to address ' + addressToSaveAt);
+            intArray.splice(addressToSaveAt, 1, 1);
+        } else {
+            console.log(parameter1 + ' is not equal to ' + parameter2 + '. Saving 0 to address ' + addressToSaveAt);
+            intArray.splice(addressToSaveAt, 1, 0);
+        }
+        return intArray;
+    }
+} 
 
 module.exports = Intcode;
